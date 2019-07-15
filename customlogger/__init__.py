@@ -19,10 +19,11 @@ class CustomLogger:
         self.file_handler = file_handler
         self.level = level
 
-        if type(filename) == str:
-            filename = [filename]
-        if not isinstance(filename, list):
-            raise ValueError("Filename must be string or list of string")
+        if filename is not None:
+            if type(filename) == str:
+                filename = [filename]
+            if not isinstance(filename, list):
+                raise ValueError("Filename must be string or list of string")
 
         self.filenames = filename
 
