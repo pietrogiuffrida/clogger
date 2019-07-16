@@ -1,4 +1,6 @@
-# CLogger
+CLogger
+=========
+
 My way python logger configuration
 
 CLogger contains two classes (CustomLogger and CustomFormatter)
