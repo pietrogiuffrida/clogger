@@ -4,15 +4,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-      name='clogger',
+      name="clogger",
       version='0.11',
-      description='My way python logger configuration',
+      description="My way python logger configuration",
       long_description=long_description,
-      url='https://github.com/pietrogiuffrida/customlogger/',
-      author='Pietro Giuffrida',
-      author_email='pietro.giuffri@gmail.com',
-      license='MIT',
-      packages=['clogger'],
+      url="https://github.com/pietrogiuffrida/customlogger/",
+      author="Pietro Giuffrida",
+      author_email="pietro.giuffri@gmail.com",
+      license="MIT",
+      packages=["clogger"],
       zip_safe=False,
       install_requires=[],
       classifiers=[
