@@ -48,10 +48,11 @@ class CustomLogger:
     @file_handler.setter
     def file_handler(self, value):
         if isinstance(value, bool):
-            if value and not self.filenames:
-                raise ValueError("filename(s) cannot be None if file_handler is True!")
             self._file_handler = value
-            self.add_handler("file")
+            if value:
+                if not self.filenames:
+                    raise ValueError("filename(s) cannot be None if file_handler is True!")
+                self.add_handler("file")
         else:
             raise ValueError("file_handler must be an instance of bool")
 
@@ -63,7 +64,8 @@ class CustomLogger:
     def stream_handler(self, value):
         if isinstance(value, bool):
             self._stream_handler = value
-            self.add_handler("stream")
+            if value:
+                self.add_handler("stream")
         else:
             raise ValueError("stream_handler must be an instance of bool")
 
