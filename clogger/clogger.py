@@ -5,6 +5,12 @@ import logging
 
 
 class CustomLogger:
+    """CustomLogger simplify logging configuration
+
+    A simple class that simplify python logging library configuration and
+    customization. It has been designed in order to obtain a standard and
+    general method to configure logging in different contexts.
+    """
 
     log_format = "%(asctime)s %(splitted_name)-15s %(levelname)-8s %(message)s"
 
@@ -16,6 +22,19 @@ class CustomLogger:
         file_handler=False,
         filenames=None,
     ):
+        """
+
+        Args:
+            handler_name (str): the name of the main handler. It will be appear in every
+                log, then it should be a short and unique string
+            level (str): the log level. It must be one of DEBUG, INFO, WARNING, ERROR.
+                It can be changed using `change_level` method.
+            stream_handler (bool): if True, the log will be redirected (also) to stdout
+            file_handler (bool): if True, the log will be redirected (also) to file.
+                If True, one or more filenames must be indicated in filenames argument.
+            filenames (str or list of str): the name of the file(s) in which log will be
+                redirected.
+        """
 
         self.formatter = CustomFormatter(self.log_format)
 
@@ -37,8 +56,7 @@ class CustomLogger:
     def level(self, value):
         if not isinstance(value, str):
             raise ValueError("level must be an instance of string")
-        if value not in ["DEBUG", "INFO", "WARNING", "ERROR"]:
-            raise ValueError("level must be one of DEBUG, INFO, WARNING, ERROR")
+        self.check_required_level(value)
         self._level = value
 
     @property
@@ -99,15 +117,23 @@ class CustomLogger:
         self._handler_name = value
 
     def add_handler(self, handler):
+        """Add an handler to logging handlers list.
+
+        Args:
+            handler (str): must be one of "file" and "stream".
+
+        """
         if handler == "file":
             for filename in self.filenames:
                 h = logging.FileHandler(filename)
                 h.setFormatter(self.formatter)
                 logging.getLogger().handlers.append(h)
-        if handler == "stream":
+        elif handler == "stream":
             h = logging.StreamHandler()
             h.setFormatter(self.formatter)
             logging.getLogger().handlers.append(h)
+        else:
+            raise ValueError("handler must be one of file and stream")
 
     def debug(self, msg):
         self.logger.debug(msg)
@@ -125,13 +151,35 @@ class CustomLogger:
         self.logger.exception(msg)
 
     def starting_message(self):
+        """Simple method to print a starting message inside log.
+        """
         self.logger.info("*" * 20 + " Starting... " + "*" * 20)
 
     def exiting_message(self):
+        """Simple method to print a stopping message inside log.
+        """
         self.logger.info("*" * 20 + " Exiting... " + "*" * 20)
 
     @staticmethod
-    def change_level(level, handler_name=None):
+    def check_required_level(value):
+        if value not in ["DEBUG", "INFO", "WARNING", "ERROR"]:
+            raise ValueError("level must be one of DEBUG, INFO, WARNING, ERROR")
+
+    def change_level(self, level, handler_name=None):
+        """Change the log level for one or all handlers.
+
+        You can use this method to change log level for one or all handlers.
+        For example, if you want change log level from DEBUG to INFO level to mute
+        too verbose log. Or if you want mute only a specific handler too muth verbose
+        (such the logger of requests library, that is very verbose under WARNING level).
+
+        Args:
+            level (str): the level name to change to.
+            handler_name (str): the handler name.
+        """
+
+        self.check_required_level(level)
+
         if handler_name:
             if handler_name not in logging.root.manager.loggerDict:
                 logging.getLogger(handler_name).setLevel(level)
@@ -141,6 +189,12 @@ class CustomLogger:
 
     @staticmethod
     def get_loggers():
+        """
+
+        Returns:
+            return a dictionary containing all the handler names.
+
+        """
         return logging.root.manager.loggerDict
 
 
