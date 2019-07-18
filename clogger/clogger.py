@@ -15,12 +15,12 @@ class CustomLogger:
     log_format = "%(asctime)s %(splitted_name)-15s %(levelname)-8s %(message)s"
 
     def __init__(
-        self,
-        handler_name="CustomLogger",
-        level="INFO",
-        stream_handler=True,
-        file_handler=False,
-        filenames=None,
+            self,
+            handler_name="CustomLogger",
+            level="INFO",
+            stream_handler=True,
+            file_handler=False,
+            filenames=None,
     ):
         """
 
@@ -175,7 +175,7 @@ class CustomLogger:
 
         Args:
             level (str): the level name to change to.
-            handler_name (str): the handler name.
+            handler_names (str or list): a list of handler name or a single handler name.
         """
 
         self.check_required_level(level)
@@ -192,7 +192,6 @@ class CustomLogger:
         else:
             for internal_logger in logging.root.manager.loggerDict:
                 logging.getLogger(internal_logger).setLevel(level)
-
 
     @staticmethod
     def get_loggers():

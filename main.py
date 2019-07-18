@@ -9,7 +9,7 @@ if __name__ == '__main__':
         handler_name="MyCustomLogger",
         stream_handler=True,
         file_handler=True,
-        filename="default.log",
+        filenames="default.log",
         level="INFO",
     )
 
@@ -24,5 +24,5 @@ if __name__ == '__main__':
         1 + 'a'
     except:
         logger.exception("Exception test (exception follows)")
-    
+
     logger.exiting_message()
