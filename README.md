@@ -1,13 +1,14 @@
-#clogger
+# clogger
 
 Python logger configuration, my way.
 
-clogger is a library that helps to configure
-python logging lybrary in the way I like. It
-helps configuration task such:
+clogger is a library that helps you to configure
+python logging library in the way I like. It
+helps configuration tasks such:
 
-- multiple handlers (several filehandler, a streamhandler)
-- log level setting for one or all handlers
+- multiple handlers
+- log level setting
+
 
 clogger contains two classes -
 CustomLogger and CustomFormatter -
@@ -18,8 +19,10 @@ logging.Formatter class in order to split
 handler names at the last '.', to improve readability
 of the log.
 
-CustomoLogger class initialize and configure logging
-library enabling a small set of preconfigured
+CustomoLogger class can be used to initialize
+and configure logging
+library in a smart and easily replicable way.
+It also enable a (small) set of preconfigured
 actions.
 
 ## Installation
