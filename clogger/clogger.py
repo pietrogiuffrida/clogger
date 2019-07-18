@@ -165,7 +165,7 @@ class CustomLogger:
         if value not in ["DEBUG", "INFO", "WARNING", "ERROR"]:
             raise ValueError("level must be one of DEBUG, INFO, WARNING, ERROR")
 
-    def change_level(self, level, handler_name=None):
+    def change_level(self, level, handler_names=None):
         """Change the log level for one or all handlers.
 
         You can use this method to change log level for one or all handlers.
@@ -180,12 +180,19 @@ class CustomLogger:
 
         self.check_required_level(level)
 
-        if handler_name:
-            if handler_name not in logging.root.manager.loggerDict:
-                logging.getLogger(handler_name).setLevel(level)
-                return
-        for internal_logger in logging.root.manager.loggerDict:
-            logging.getLogger(internal_logger).setLevel(level)
+        if isinstance(handler_names, str):
+            handler_names = [handler_names]
+
+        if handler_names:
+            for name in handler_names:
+                if name not in logging.root.manager.loggerDict:
+                    raise ValueError("{} seems not to be a valid handler_name".format(name))
+                logging.getLogger(name).setLevel(level)
+
+        else:
+            for internal_logger in logging.root.manager.loggerDict:
+                logging.getLogger(internal_logger).setLevel(level)
+
 
     @staticmethod
     def get_loggers():
