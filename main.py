@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from clogger import CustomLogger
+from clogger import CustomLogger, SysError
 
 if __name__ == '__main__':
 
@@ -11,6 +11,7 @@ if __name__ == '__main__':
         file_handler=True,
         filenames="default.log",
         level="INFO",
+        capture_syserror=True,
     )
 
     logger.starting_message()
@@ -22,7 +23,12 @@ if __name__ == '__main__':
 
     try:
         1 + 'a'
-    except:
+    except Exception as e:
         logger.exception("Exception test (exception follows)")
+
+
+    logger.info("Going to do something else...")
+
+    pppo
 
     logger.exiting_message()

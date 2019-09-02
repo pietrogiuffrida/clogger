@@ -21,6 +21,7 @@ class CustomLogger:
             stream_handler=True,
             file_handler=False,
             filenames=None,
+            capture_syserror=True
     ):
         """
 
@@ -47,6 +48,11 @@ class CustomLogger:
         self.file_handler = file_handler
 
         self.change_level(self.level)
+
+        if capture_syserror:
+            import sys
+            syslogger = SysError(logger=self.logger)
+            sys.stderr = syslogger
 
     @property
     def level(self):
@@ -239,3 +245,17 @@ class CustomFormatter(logging.Formatter):
                 s = s + "\n"
             s = s + self.formatStack(record.stack_info)
         return s
+
+
+class SysError:
+
+    def __init__(self, logger):
+        self.logger = logger
+        self.acc = []
+
+    def write(self, msg):
+        self.acc.append(msg)
+        if msg in ['\n', "\r", "\n\r"]:
+            self.logger.fatal(''.join(self.acc))
+            self.acc = []
+
