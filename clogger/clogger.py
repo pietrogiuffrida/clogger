@@ -257,5 +257,6 @@ class SysError:
         self.acc.append(msg)
         if msg in ['\n', "\r", "\n\r"]:
             self.logger.fatal(''.join(self.acc))
+            print(''.join(self.acc))
             self.acc = []
 
