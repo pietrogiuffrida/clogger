@@ -225,7 +225,11 @@ class CustomFormatter(logging.Formatter):
         it is formatted using formatException() and appended to the message.
         """
 
-        record.splitted_name = record.__dict__["name"].split(".")[-1]
+        splitted = record.__dict__["name"].split(".")
+        if len(splitted) > 1 and len(splitted[-1]) == 'py':
+            record.splitted_name = splitted[-2]
+        else:
+            record.splitted_name = splitted[-1]
 
         record.message = record.getMessage()
         if self.usesTime():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from clogger import CustomLogger, SysError
+from clogger import CustomLogger
 
 if __name__ == '__main__':
 
