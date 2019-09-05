@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
       name='clogger',
-      version='0.12.6',
+      version='0.12.7',
       url='https://github.com/pietrogiuffrida/customlogger/',
       author='Pietro Giuffrida',
       author_email='pietro.giuffri@gmail.com',
