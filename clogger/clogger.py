@@ -226,10 +226,10 @@ class CustomFormatter(logging.Formatter):
         """
 
         splitted = record.__dict__["name"].split(".")
-        if len(splitted) > 1 and len(splitted[-1]) == 'py':
-            record.splitted_name = splitted[-2]
+        if len(splitted) > 1 and splitted[-1] == 'py':
+            record.splitted_name = splitted[-2].strip('/')
         else:
-            record.splitted_name = splitted[-1]
+            record.splitted_name = splitted[-1].strip('/')
 
         record.message = record.getMessage()
         if self.usesTime():
