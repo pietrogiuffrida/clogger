@@ -6,7 +6,7 @@ from clogger import CustomLogger
 if __name__ == '__main__':
 
     logger = CustomLogger(
-        handler_name="MyCustomLogger",
+        handler_name=__file__,
         stream_handler=True,
         file_handler=True,
         filenames="default.log",

@@ -192,7 +192,7 @@ class CustomLogger:
         if handler_names:
             for name in handler_names:
                 if name not in logging.root.manager.loggerDict:
-                    raise ValueError("{} seems not to be a valid handler_name".format(name))
+                    self.logger.error("{} seems not to be a valid handler_name".format(name))
                 logging.getLogger(name).setLevel(level)
 
         else:
