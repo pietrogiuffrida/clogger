@@ -48,11 +48,21 @@ class CustomLogger:
         self.file_handler = file_handler
 
         self.change_level(self.level)
+        self.capture_syserror = capture_syserror
 
         if capture_syserror:
             import sys
             syslogger = SysError(logger=self.logger)
             sys.stderr = syslogger
+
+    def close(self):
+        handlers = self.logger.handlers[:]
+        for h in handlers:
+            h.close()
+            self.logger.removeHandler(h)
+        if self.capture_syserror:
+            import sys
+            sys.stderr = sys.__stderr__
 
     @property
     def level(self):
